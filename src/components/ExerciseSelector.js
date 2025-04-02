@@ -5,11 +5,12 @@ const ExerciseSelector = ({ exercises, onSelect }) => {
     const [customSettings, setCustomSettings] = useState({});
   
     const handleSettingChange = (exerciseId, field, value) => {
+      const numericValue = Math.max(1, parseInt(value) || 1);
       setCustomSettings(prev => ({
         ...prev,
         [exerciseId]: {
           ...prev[exerciseId],
-          [field]: parseInt(value) || 0
+          [field]: numericValue
         }
       }));
     };
@@ -51,23 +52,31 @@ const ExerciseSelector = ({ exercises, onSelect }) => {
                     <label>
                       Duration (sec):
                       <input
-                        type="number"
-                        value={settings.duration || 30}
-                        onChange={(e) => handleSettingChange(exercise.id, 'duration', e.target.value)}
-                        min="10"
-                      />
+  type="number"
+  value={settings.duration || 30}
+  onChange={(e) => handleSettingChange(exercise.id, 'duration', e.target.value)}
+  min="10"
+  required
+/>
                     </label>
                   </div>
                 )}
                 
-                <button onClick={() => onSelect({
-                  ...exercise,
-                  reps: exercise.reps ? settings.reps : undefined,
-                  sets: exercise.reps ? settings.sets : undefined,
-                  duration: exercise.duration ? settings.duration : undefined
-                })}>
-                  Add to Workout
-                </button>
+<button onClick={() => {
+  const baseSettings = EXERCISE_CONFIGS[exercise.id];
+  const reps = exercise.reps ? (settings.reps ?? baseSettings?.defaultReps ?? 10) : undefined;
+  const sets = exercise.reps ? (settings.sets ?? 3) : undefined;
+  const duration = exercise.duration ? (settings.duration ?? 30) : undefined;
+
+  onSelect({
+    ...exercise,
+    reps,
+    sets,
+    duration
+  });
+}}>
+  Add to Workout
+</button>
               </div>
             );
           })}
