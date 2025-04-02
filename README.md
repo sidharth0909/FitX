@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Fitness Tracker (FitX)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+FitX is an advanced fitness tracking application built using React and TensorFlow.js for real-time pose estimation. The application helps users monitor their workouts, set fitness goals, and track progress with AI-powered assistance. It offers an interactive workout experience with guided commands and video instructions.
 
-## Available Scripts
+## Features
+- **User Authentication**: Secure authentication using Supabase.
+- **Dashboard**: After logging in, users are directed to the dashboard where the pose estimation model is initiated.
+- **Pose Estimation**: Uses TensorFlow.js for real-time workout tracking and feedback.
+- **Workout Selection**: Users can choose from different predefined workout models.
+- **Live Camera Integration**: The app opens the camera to track movements and provide real-time guidance.
+- **Workout Assistance**: Video tutorials and voice commands assist users during workouts.
+- **Goal Setting**: Users can set fitness goals and monitor progress.
+- **Timer Functionality**: A built-in timer helps users manage workout duration.
+- **Custom Exercises**: Users can create and customize their own exercises.
 
-In the project directory, you can run:
+## Technologies Used
+- **Frontend**: React
+- **Authentication**: Supabase
+- **Machine Learning**: TensorFlow.js (Pose Estimation)
+- **Database**: Supabase
+- **APIs**: HealthKit, Google Fit (future integration plans)
 
-### `npm start`
+## Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/sidharth0909/FitX.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd FitX
+   ```
+3. Install dependencies:
+   ```sh
+   npm install # or yarn install
+   ```
+4. Set up environment variables in a `.env` file.
+5. Start the development server:
+   ```sh
+   npm start # or yarn start
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Usage
+- Sign up or log in using Supabase authentication.
+- Once logged in, access the dashboard where pose estimation is initiated.
+- Select a workout model and begin exercising with AI-powered assistance.
+- Follow real-time video tutorials and voice commands for guidance.
+- Set fitness goals and track progress over time.
+- Utilize the built-in timer for better workout management.
+- Create and customize your own exercises.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Future Scope
+- **Wearable Device Integration**: Support for fitness bands and smartwatches for enhanced tracking.
+- **AI-based Feedback**: Advanced analysis to provide real-time feedback on posture and movement corrections.
+- **Social Features**: Community challenges, leaderboards, and workout-sharing capabilities.
+- **Personalized Recommendations**: AI-driven workout and diet plans tailored to individual users.
+- **Multi-device Support**: Expanding functionality for mobile and web compatibility.
+- **Voice Assistant Integration**: Hands-free interaction using voice commands.
+- **Offline Mode**: Allow users to track workouts without an internet connection.
 
-### `npm test`
+## Contribution
+Contributions are welcome! Follow these steps:
+1. Fork the repository.
+2. Create a new branch (`feature-branch-name`).
+3. Commit your changes.
+4. Push the changes and create a pull request.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
-### `npm run build`
+## Contact
+For any inquiries or support, reach out to [sidharthsaholiya@gmail.com] or create an issue in the repository.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
