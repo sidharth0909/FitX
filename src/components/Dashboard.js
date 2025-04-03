@@ -969,10 +969,16 @@ export default function Dashboard() {
         ref={webcamRef}
         className="video-feed"
         videoConstraints={{
-          width: dimensions.width,
-          height: dimensions.height,
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          aspectRatio: { ideal: 1.777 }, // 16:9
           facingMode: facingMode,
           frameRate: { ideal: 30 },
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover'
         }}
         onUserMedia={() => setIsWebcamReady(true)}
         onUserMediaError={(err) => {
@@ -981,7 +987,15 @@ export default function Dashboard() {
         }}
         forceScreenshotSourceSize={true}
       />
-      <canvas ref={canvasRef} className="pose-canvas" />
+      <canvas 
+      ref={canvasRef} 
+      className="pose-canvas"
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover'
+      }}
+    />
     </div>
   );
 
@@ -1656,12 +1670,17 @@ left: 0;
 width: 100vw;
 height: 100vh;
 z-index: 1;
+overflow: hidden;
 }
 
 .video-feed {
 width: 100%;
 height: 100%;
 object-fit: cover;
+position: absolute;
+  top: 0;
+  left: 0;
+
 }
 
 .pose-canvas {
@@ -1670,7 +1689,20 @@ top: 0;
 left: 0;
 pointer-events: none;
 mix-blend-mode: screen;
+position: absolute;
+  top: 0;
+  left: 0;
+
 }
+
+@media (max-width: 768px) {
+  .video-feed, .pose-canvas {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    min-width: 100%;
+    transform: none;
+}}
 
 .workout-overlay {
 position: fixed;
@@ -2319,6 +2351,10 @@ to { transform: rotate(360deg); }
     padding: 1rem;
     max-width: 100%;
   }
+    .workout-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 
   .nav-button {
     padding: 0.8rem 1.5rem;
@@ -2422,6 +2458,34 @@ to { transform: rotate(360deg); }
   .power-button {
     padding: 0.8rem 2rem;
     font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .video-feed, .pose-canvas {
+    width: auto;
+    height: 100%;
+  }
+  
+  .workout-overlay {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .current-exercise {
+    margin-right: 1rem;
+    max-width: 50%;
+  }
+  
+  .progress-container {
+    align-self: flex-start;
+    margin-top: 1rem;
+  }
+  
+  .workout-controls-container {
+    position: static;
+    margin-top: 1rem;
+    width: 100%;
   }
 }
 `;
