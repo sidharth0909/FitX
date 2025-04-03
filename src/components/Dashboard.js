@@ -422,6 +422,7 @@ export default function Dashboard() {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [facingMode, setFacingMode] = useState('user');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [customWorkout, setCustomWorkout] = useState([]);
   const [showExerciseSelector, setShowExerciseSelector] = useState(false);
@@ -443,6 +444,11 @@ export default function Dashboard() {
     config: null,
     exerciseIndex: 0,
   });
+
+  const toggleCamera = () => {
+    setFacingMode(prevMode => prevMode === 'user' ? 'environment' : 'user');
+    setIsWebcamReady(false);
+  };
 
   const handleApplyReps = () => {
     if (currentExercise) {
@@ -965,7 +971,7 @@ export default function Dashboard() {
         videoConstraints={{
           width: dimensions.width,
           height: dimensions.height,
-          facingMode: "user",
+          facingMode: facingMode,
           frameRate: { ideal: 30 },
         }}
         onUserMedia={() => setIsWebcamReady(true)}
@@ -1252,6 +1258,13 @@ export default function Dashboard() {
 
             <div className="workout-controls-container">
               <div className="workout-controls">
+              <button 
+  className="nav-button camera-toggle-button"
+  onClick={toggleCamera}
+  title={facingMode === 'user' ? 'Switch to back camera' : 'Switch to front camera'}
+>
+  {facingMode === 'user' ? '📷' : '🤳'}
+</button>
                 <button
                   className="nav-button set-reps-button"
                   onClick={() => setShowRepInput(!showRepInput)}
@@ -1558,6 +1571,7 @@ background: linear-gradient(135deg,rgb(0, 0, 0) 0%,rgb(16, 22, 41) 100%);
 display: flex;
 flex-direction: column;
 mini-height: 100vh;
+padding-top: 5rem;
 }
 
 /* Workout Plan Selection */
@@ -2192,7 +2206,7 @@ to { transform: rotate(360deg); }
 /* Compact Controls */
 .workout-controls {
   display: flex;
-  gap: 8px;
+  gap: 4px;
   padding: 10px;
   background: rgba(40, 40, 40, 0.9);
   backdrop-filter: blur(10px);
@@ -2257,6 +2271,158 @@ to { transform: rotate(360deg); }
 /* Auto-hide Animation */
 @keyframes fadeOut {
   to { opacity: 0.3; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) { /* Laptop */
+  .workout-options {
+    padding: 5rem 2rem;
+  }
+  
+  .plan-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) { /* Tablet */
+  .workout-options {
+    padding: 4rem 1.5rem;
+  }
+
+  .workout-options h2 {
+    font-size: 1.75rem;
+  }
+
+  .category-selector {
+    gap: 0.75rem;
+  }
+
+  .category-selector button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .exercise-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .plan-selection h1 {
+    font-size: 2rem;
+  }
+
+  .plan-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .current-exercise {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  .nav-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) { /* Mobile */
+  .workout-options {
+    padding: 2rem 1rem;
+  }
+
+  .workout-options h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .category-selector {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .category-selector button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .exercise-selector {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .exercise-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .exercise-card {
+    padding: 1rem;
+  }
+
+  .custom-controls input {
+    width: 50px;
+    padding: 0.4rem;
+  }
+
+  .plan-selection {
+    padding: 1rem;
+  }
+
+  .plan-selection h1 {
+    font-size: 1.75rem;
+  }
+
+  .plan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-card {
+    padding: 1rem;
+  }
+
+  .workout-overlay {
+    padding: 1rem;
+  }
+
+  .progress-container {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .nav-button {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.55rem;
+  }
+
+  .rep-complete {
+    width: 90%;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .stats-deck {
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .stat-card {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+
+  .celebration-title {
+    font-size: 2rem;
+  }
+
+  .power-button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
 }
 `;
 
