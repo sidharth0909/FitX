@@ -134,6 +134,24 @@ export const EXERCISE_CONFIGS = {
 };
 ```
 
+## 🚀 FitX - Project Preview  
+
+### 🏠 Home Page  
+![Home Page](https://raw.githubusercontent.com/sidharth0909/FitX/main/public/Home.png)  
+
+### 📊 Dashboard  
+![Dashboard](https://raw.githubusercontent.com/sidharth0909/FitX/main/public/Dashboard.png)  
+
+### 🔑 Login Page  
+![Login](https://raw.githubusercontent.com/sidharth0909/FitX/main/public/Login.png)  
+
+### 🎯 Workout Customization  
+![Custom Workout](https://raw.githubusercontent.com/sidharth0909/FitX/main/public/Custom.png)  
+
+### 🎥 Demo  
+![Demo](https://raw.githubusercontent.com/sidharth0909/FitX/main/public/demo.png)
+
+
 ## Installation
 1. Clone the repository:
    ```sh
