@@ -1,5 +1,5 @@
 import { FaDumbbell, FaHeart, FaArrowRight } from 'react-icons/fa';
-import { FiFacebook, FiInstagram, FiTwitter, FiYoutube } from 'react-icons/fi';
+import { FiFacebook, FiGithub, FiInstagram, FiGit, FiYoutube } from 'react-icons/fi';
 
 const Footer = () => {
   return (
@@ -27,8 +27,8 @@ const Footer = () => {
               <a href="#" aria-label="Instagram" className="social-icon">
                 <FiInstagram />
               </a>
-              <a href="#" aria-label="Twitter" className="social-icon">
-                <FiTwitter />
+              <a href="https://github.com/sidharth0909/FitX" aria-label="Gihtub" className="social-icon">
+                <FiGithub />
               </a>
               <a href="#" aria-label="YouTube" className="social-icon">
                 <FiYoutube />
@@ -96,7 +96,7 @@ const styles = `
 /* Footer Styles */
 .footer {
   position: relative;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: linear-gradient(135deg,rgb(9, 9, 9) 0%,rgb(16, 23, 42) 100%);
   color: white;
   margin-top: 20rem;
   overflow: hidden;

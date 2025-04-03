@@ -19,7 +19,120 @@ FitX is an advanced fitness tracking application built using React and TensorFlo
 - **Authentication**: Supabase
 - **Machine Learning**: TensorFlow.js (Pose Estimation)
 - **Database**: Supabase
-- **APIs**: HealthKit, Google Fit (future integration plans)
+
+
+## **Project Structure**
+- `App.js`: Handles routing and authentication.
+- `Dashboard.js`: The main workout interface where users can select plans, perform exercises, and track their progress.
+- `ExerciseSelector.js`: Allows users to select and customize workouts.
+- `exerciseConfigs.js`: Contains predefined configurations for exercises.
+- `Auth.js`: Handles user authentication (login/register).
+- `Home.js`: The landing page of the app.
+
+
+## **1. App.js - Routing & Authentication**
+
+### **Purpose:**
+- Manages navigation between different pages.
+- Implements protected routes using Supabase authentication.
+
+### **Key Features:**
+- Uses `react-router-dom` for navigation.
+- Checks user authentication before accessing the `Dashboard`.
+- Redirects unauthenticated users to the login page.
+
+```javascript
+function ProtectedRoute({ children }) {
+  const user = supabase.auth.getUser();
+  return user ? children : <Navigate to="/login" />;
+}
+```
+
+---
+
+## **2. Dashboard.js - Core Workout Component**
+
+### **Purpose:**
+- Displays workout options.
+- Allows users to select a plan or create a custom workout.
+- Integrates TensorFlow.js for exercise recognition.
+- Tracks and displays workout progress.
+
+### **Key Features:**
+1. **Workout Selection:**
+   - Users choose between predefined workout plans or create their own.
+   - Custom workouts allow users to manually select exercises and set repetitions or duration.
+
+2. **TensorFlow.js Integration:**
+   - The system uses a TensorFlow.js model to analyze user movements through a webcam.
+   - The model tracks body posture and counts repetitions.
+   - Integration is handled using `@tensorflow-models/posenet`.
+
+3. **Real-Time Progress Tracking:**
+   - Circular progress bars indicate exercise completion.
+   - Users receive real-time feedback on form and repetition count.
+
+4. **Exercise Execution:**
+   - Each exercise has predefined configurations (`EXERCISE_CONFIGS`).
+   - The app provides instructions, timers, and video demonstrations.
+
+### **TensorFlow.js Integration:**
+#### **How It Works:**
+- Uses PoseNet to detect body keypoints.
+- Determines exercise state based on predefined angles.
+- Counts reps when the movement transitions between defined `up` and `down` states.
+
+```javascript
+const poseNetModel = await posenet.load();
+const pose = await poseNetModel.estimateSinglePose(videoElement, { flipHorizontal: false });
+```
+- The detected pose is analyzed to match predefined exercise criteria.
+
+---
+
+## **3. ExerciseSelector.js - Custom Workout Selection**
+
+### **Purpose:**
+- Allows users to choose individual exercises and customize reps, sets, or duration.
+
+### **Key Features:**
+- Uses `useState` to track user settings.
+- Enables selecting exercises from a predefined list (`EXERCISE_CONFIGS`).
+- Allows customization of exercise parameters.
+
+```javascript
+const handleSettingChange = (exerciseId, field, value) => {
+  const numericValue = Math.max(1, parseInt(value) || 1);
+  setCustomSettings(prev => ({
+    ...prev,
+    [exerciseId]: { ...prev[exerciseId], [field]: numericValue }
+  }));
+};
+```
+
+---
+
+## **4. exerciseConfigs.js - Exercise Definitions**
+
+### **Purpose:**
+- Defines exercises, including movement ranges, muscles worked, and calorie estimates.
+
+### **Key Features:**
+- Contains exercise metadata, including start positions and angles.
+- Provides instructions for correct form.
+- Defines calorie expenditure per repetition.
+
+```javascript
+export const EXERCISE_CONFIGS = {
+  push_up: {
+    start_state: 'up',
+    up_angle: 170,
+    down_angle: 90,
+    instructions: 'Maintain straight body line, lower chest to floor',
+    muscles: 'Chest, Shoulders, Triceps',
+  },
+};
+```
 
 ## Installation
 1. Clone the repository:
@@ -48,6 +161,12 @@ FitX is an advanced fitness tracking application built using React and TensorFlo
 - Set fitness goals and track progress over time.
 - Utilize the built-in timer for better workout management.
 - Create and customize your own exercises.
+
+## **Conclusion**
+- The app provides a structured workout experience with AI-powered exercise tracking.
+- TensorFlow.js enables real-time rep counting and posture assessment.
+- Users can choose between predefined workouts or create their own.
+- Authentication ensures secure access to user-specific data.
 
 ## Future Scope
 - **Wearable Device Integration**: Support for fitness bands and smartwatches for enhanced tracking.

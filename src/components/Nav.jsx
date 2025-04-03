@@ -32,7 +32,17 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-brand">
           <FaDumbbell className="logo-icon" />
-          <span>FitX</span>
+          <span>
+  <a 
+    href="https://github.com/sidharth0909/FitX" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    style={{ textDecoration: 'none', color: 'inherit' }}
+  >
+    FitX
+  </a>
+</span>
+
         </div>
 
         <div className={`navbar-links ${isOpen ? 'active' : ''}`}>
@@ -89,7 +99,7 @@ const Navbar = () => {
 const styles = `
 /* Navbar Styles */
 .navbar {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: linear-gradient(135deg,rgb(0, 0, 0) 0%,rgb(26, 34, 56) 100%);
   color: white;
   padding: 1rem 2rem;
   position: fixed;
@@ -190,10 +200,12 @@ const styles = `
 
 .nav-link.logout {
   color: #ff5e62;
+  background: rgb(255, 253, 253);
 }
 
 .nav-link.logout:hover {
-  background: rgba(255, 94, 98, 0.1);
+  background: rgb(255, 0, 0);
+  color:rgb(255, 255, 255);
 }
 
 .nav-icon {

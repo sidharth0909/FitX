@@ -47,7 +47,7 @@ export default function Auth({ type }) {
         <div className="auth-header">
           {fitnessIcon}
           <h1 className="auth-title">
-            {type === 'login' ? 'Welcome Back' : 'Join FitTrack'}
+            {type === 'login' ? 'Welcome Back' : 'Join FitX'}
           </h1>
           <p className="auth-subtitle">
             {type === 'login' 

@@ -1353,7 +1353,7 @@ const styles = `
 
 /* Workout Options */
 .workout-options {
-  padding: 5.5rem;
+  padding: 7.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -1554,7 +1554,7 @@ const styles = `
 font-family: 'Inter', system-ui, sans-serif;
 color: #fff;
 min-height: 100vh;
-background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+background: linear-gradient(135deg,rgb(0, 0, 0) 0%,rgb(16, 22, 41) 100%);
 display: flex;
 flex-direction: column;
 mini-height: 100vh;
