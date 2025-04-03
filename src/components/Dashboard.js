@@ -9,6 +9,8 @@ import "react-circular-progressbar/dist/styles.css";
 import Confetti from "react-confetti";
 import ReactPlayer from "react-player";
 import ExerciseSelector from "./ExerciseSelector";
+import Navbar from "./Nav.jsx";
+import Footer from "./Footer.jsx";
 
 // Workout plans with video demonstrations
 const workoutCategories = {
@@ -426,9 +428,8 @@ export default function Dashboard() {
   const [showVideo, setShowVideo] = useState(false);
   const [workoutComplete, setWorkoutComplete] = useState(false);
   const [caloriesBurned, setCaloriesBurned] = useState(0);
-  const [repsDone, setRepsDone] = useState(0);  // Initialize with 0 or your logic
-  const [detectorType, setDetectorType] = useState('movenet');
-
+  const [repsDone, setRepsDone] = useState(0); // Initialize with 0 or your logic
+  const [detectorType, setDetectorType] = useState("movenet");
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -442,7 +443,6 @@ export default function Dashboard() {
     config: null,
     exerciseIndex: 0,
   });
-
 
   const handleApplyReps = () => {
     if (currentExercise) {
@@ -465,13 +465,13 @@ export default function Dashboard() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const controls = document.querySelector('.workout-controls-container');
+      const controls = document.querySelector(".workout-controls-container");
       if (controls) {
-        controls.style.animation = 'fadeOut 0.5s forwards';
-        controls.style.animationDelay = '5s';
+        controls.style.animation = "fadeOut 0.5s forwards";
+        controls.style.animationDelay = "5s";
       }
     }, 5000);
-    
+
     return () => clearTimeout(timer);
   }, []);
   // Initialize session for current exercise
@@ -488,7 +488,7 @@ export default function Dashboard() {
       config: {
         ...config,
         goal: exercise.reps || exercise.duration || 10,
-        duration: exercise.duration || 0
+        duration: exercise.duration || 0,
       },
       exerciseIndex: selectedPlan.exercises.findIndex(
         (ex) => ex.id === exercise.id
@@ -499,8 +499,7 @@ export default function Dashboard() {
     setGoalReached(false);
     setError(null);
     setShowVideo(false);
-};
-
+  };
 
   // Handle window resize
   useEffect(() => {
@@ -729,7 +728,8 @@ export default function Dashboard() {
 
     try {
       // Get the exercise config - fall back to default if not found
-      const exerciseConfig = EXERCISE_CONFIGS[exerciseId] || EXERCISE_CONFIGS.default;
+      const exerciseConfig =
+        EXERCISE_CONFIGS[exerciseId] || EXERCISE_CONFIGS.default;
 
       switch (exerciseId) {
         // Standard exercises with specific angle calculations
@@ -740,7 +740,11 @@ export default function Dashboard() {
           const elbow = keypoints.find((k) => k.name === "left_elbow");
           const wrist = keypoints.find((k) => k.name === "left_wrist");
 
-          if (shoulder?.score > 0.3 && elbow?.score > 0.3 && wrist?.score > 0.3) {
+          if (
+            shoulder?.score > 0.3 &&
+            elbow?.score > 0.3 &&
+            wrist?.score > 0.3
+          ) {
             angle = calculateAngle(shoulder, elbow, wrist);
           }
           break;
@@ -761,7 +765,11 @@ export default function Dashboard() {
           const pElbow = keypoints.find((k) => k.name === "left_elbow");
           const pWrist = keypoints.find((k) => k.name === "left_wrist");
 
-          if (pShoulder?.score > 0.3 && pElbow?.score > 0.3 && pWrist?.score > 0.3) {
+          if (
+            pShoulder?.score > 0.3 &&
+            pElbow?.score > 0.3 &&
+            pWrist?.score > 0.3
+          ) {
             angle = calculateAngle(pShoulder, pElbow, pWrist);
           }
           break;
@@ -773,7 +781,11 @@ export default function Dashboard() {
           const cElbow = keypoints.find((k) => k.name === "left_elbow");
           const cWrist = keypoints.find((k) => k.name === "left_wrist");
 
-          if (cShoulder?.score > 0.3 && cElbow?.score > 0.3 && cWrist?.score > 0.3) {
+          if (
+            cShoulder?.score > 0.3 &&
+            cElbow?.score > 0.3 &&
+            cWrist?.score > 0.3
+          ) {
             angle = calculateAngle(cShoulder, cElbow, cWrist);
           } else {
             // Fall back to leg movement detection
@@ -781,7 +793,11 @@ export default function Dashboard() {
             const cKnee = keypoints.find((k) => k.name === "left_knee");
             const cAnkle = keypoints.find((k) => k.name === "left_ankle");
 
-            if (cHip?.score > 0.3 && cKnee?.score > 0.3 && cAnkle?.score > 0.3) {
+            if (
+              cHip?.score > 0.3 &&
+              cKnee?.score > 0.3 &&
+              cAnkle?.score > 0.3
+            ) {
               angle = calculateAngle(cHip, cKnee, cAnkle);
             }
           }
@@ -791,22 +807,23 @@ export default function Dashboard() {
       if (angle > 0 && session.config) {
         // Determine direction based on exercise type
         const isArmExercise = [
-          "bicep_curl", 
-          "shoulder_press", 
-          "pull_up"
+          "bicep_curl",
+          "shoulder_press",
+          "pull_up",
         ].includes(exerciseId);
 
-        const isLegExercise = [
-          "squat", 
-          "lunge", 
-          "push_up"
-        ].includes(exerciseId);
+        const isLegExercise = ["squat", "lunge", "push_up"].includes(
+          exerciseId
+        );
 
         if (isArmExercise || (!isArmExercise && !isLegExercise)) {
           // For arm exercises or custom exercises, up is when angle decreases
           if (angle > session.config.down_angle) {
             session.state = "down";
-          } else if (angle < session.config.up_angle && session.state === "down") {
+          } else if (
+            angle < session.config.up_angle &&
+            session.state === "down"
+          ) {
             session.state = "up";
             session.count += 1;
             setCount(session.count);
@@ -818,7 +835,10 @@ export default function Dashboard() {
           // For leg exercises, up is when angle increases
           if (angle < session.config.down_angle) {
             session.state = "down";
-          } else if (angle > session.config.up_angle && session.state === "down") {
+          } else if (
+            angle > session.config.up_angle &&
+            session.state === "down"
+          ) {
             session.state = "up";
             session.count += 1;
             setCount(session.count);
@@ -832,7 +852,6 @@ export default function Dashboard() {
       console.error("Exercise processing error:", err);
     }
   };
-
 
   // Move to next exercise or complete workout
   const nextExercise = () => {
@@ -849,55 +868,62 @@ export default function Dashboard() {
   const startCustomWorkout = () => {
     // First validate all exercises
     const invalidExercises = customWorkout
-      .filter(ex => !(
-        (ex.reps > 0 && ex.sets > 0) || 
-        (ex.duration > 0 && ex.sets > 0)
-      ))
-      .map(ex => ex.name || ex.id);
-  
+      .filter(
+        (ex) =>
+          !((ex.reps > 0 && ex.sets > 0) || (ex.duration > 0 && ex.sets > 0))
+      )
+      .map((ex) => ex.name || ex.id);
+
     if (invalidExercises.length > 0) {
-      setError(`Invalid settings for: ${invalidExercises.join(', ')}. Please check reps/duration and sets.`);
+      setError(
+        `Invalid settings for: ${invalidExercises.join(
+          ", "
+        )}. Please check reps/duration and sets.`
+      );
       return;
     }
-  
-  
+
     // Proceed with valid exercises
-    const validExercises = customWorkout.map(ex => {
+    const validExercises = customWorkout.map((ex) => {
       // Use the exercise's specific config if available, otherwise use default
-      const exerciseConfig = EXERCISE_CONFIGS[ex.id] || EXERCISE_CONFIGS.default;
-      
+      const exerciseConfig =
+        EXERCISE_CONFIGS[ex.id] || EXERCISE_CONFIGS.default;
+
       return {
         ...ex,
         ...exerciseConfig, // Spread the config properties
-        name: allExercises.find(e => e.id === ex.id)?.name || ex.id,
+        name: allExercises.find((e) => e.id === ex.id)?.name || ex.id,
         sets: ex.sets || 3,
         reps: ex.reps || exerciseConfig.defaultReps || 10,
-        duration: ex.duration || 0
+        duration: ex.duration || 0,
       };
     });
-  
+
     if (validExercises.length === 0) {
       setError("Please add valid exercises");
       return;
     }
-  
+
     const newPlan = {
       id: "custom_" + Date.now(),
       name: "Custom Workout",
       exercises: validExercises,
       duration: validExercises.reduce(
-        (acc, ex) => acc + (ex.duration ? ex.duration * ex.sets : ex.reps * ex.sets * 5),
+        (acc, ex) =>
+          acc + (ex.duration ? ex.duration * ex.sets : ex.reps * ex.sets * 5),
         0
       ),
       calories: validExercises.reduce(
-        (acc, ex) => acc + (ex.caloriesPerUnit || 0.5) *
-          (ex.reps ? ex.reps * ex.sets : ex.duration * ex.sets),
+        (acc, ex) =>
+          acc +
+          (ex.caloriesPerUnit || 0.5) *
+            (ex.reps ? ex.reps * ex.sets : ex.duration * ex.sets),
         0
       ),
       difficulty: "Custom",
-      icon: "✨"
+      icon: "✨",
     };
-  
+
     setSelectedPlan(newPlan);
     setCurrentExercise(newPlan.exercises[0]);
     setCustomWorkout([]);
@@ -1064,6 +1090,7 @@ export default function Dashboard() {
   // Main render
   return (
     <div className="dashboard">
+      {!currentExercise && <Navbar />}
       {!selectedPlan ? (
         <div className="workout-options">
           <h2>Choose Your Workout Style</h2>
@@ -1071,7 +1098,10 @@ export default function Dashboard() {
             {Object.keys(workoutCategories).map((category) => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => {
+                  setSelectedCategory(category);
+                  setShowExerciseSelector(false); // Close exercise selector when category is selected
+                }}
                 className={selectedCategory === category ? "active" : ""}
               >
                 {workoutCategories[category].name}
@@ -1079,10 +1109,13 @@ export default function Dashboard() {
             ))}
             <button
               onClick={() => {
+                setShowExerciseSelector((prev) => !prev);
+                // Clear any selected category
                 setSelectedCategory(null);
-                setShowExerciseSelector(true);
               }}
-              className="custom-workout-btn"
+              className={`custom-workout-btn ${
+                showExerciseSelector ? "active" : ""
+              }`}
             >
               Create Custom Workout
             </button>
@@ -1218,43 +1251,54 @@ export default function Dashboard() {
             </div>
 
             <div className="workout-controls-container">
-  <div className="workout-controls">
-    <button
-      className="nav-button set-reps-button"
-      onClick={() => setShowRepInput(!showRepInput)}
-    >
-      Set Reps
-    </button>
-    
-    {showRepInput && (
-      <div className="rep-input-container">
-        <input
-          type="number"
-          value={goalReps}
-          onChange={(e) => setGoalReps(Math.max(1, parseInt(e.target.value) || 1))}
-          min="1"
-        />
-        <button className="apply-button" onClick={handleApplyReps}>
-          ✓
-        </button>
-      </div>
-    )}
+              <div className="workout-controls">
+                <button
+                  className="nav-button set-reps-button"
+                  onClick={() => setShowRepInput(!showRepInput)}
+                >
+                  Set Reps
+                </button>
 
-<button
-  className={`nav-button skip-button ${!goalReached ? 'disabled' : ''}`}
-  onClick={nextExercise}
-  disabled={!goalReached}
->
-  {goalReached ? "Next →" : `${count}/${currentExercise.reps || currentExercise.duration}`}
-</button>
+                {showRepInput && (
+                  <div className="rep-input-container">
+                    <input
+                      type="number"
+                      value={goalReps}
+                      onChange={(e) =>
+                        setGoalReps(Math.max(1, parseInt(e.target.value) || 1))
+                      }
+                      min="1"
+                    />
+                    <button className="apply-button" onClick={handleApplyReps}>
+                      ✓
+                    </button>
+                  </div>
+                )}
 
-    <button className="nav-button cancel-button" onClick={resetWorkout}>
-      ✕
-    </button>
+                <button
+                  className={`nav-button skip-button ${
+                    !goalReached ? "disabled" : ""
+                  }`}
+                  onClick={nextExercise}
+                  disabled={!goalReached}
+                >
+                  {goalReached
+                    ? "Next →"
+                    : `${count}/${
+                        currentExercise.reps || currentExercise.duration
+                      }`}
+                </button>
 
-    <div className="timer-display">{formatTime(time)}</div>
-  </div>
-</div>
+                <button
+                  className="nav-button cancel-button"
+                  onClick={resetWorkout}
+                >
+                  ✕
+                </button>
+
+                <div className="timer-display">{formatTime(time)}</div>
+              </div>
+            </div>
           </div>
 
           {goalReached && (
@@ -1265,6 +1309,8 @@ export default function Dashboard() {
           )}
         </div>
       )}
+
+{!currentExercise && <Footer />}
 
       {workoutComplete && (
         <div className="workout-complete">
@@ -1307,7 +1353,7 @@ const styles = `
 
 /* Workout Options */
 .workout-options {
-  padding: 2rem;
+  padding: 5.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -1446,6 +1492,11 @@ const styles = `
   border: 1px solid rgba(58, 134, 255, 0.2);
 }
 
+.custom-workout-btn.active {
+  background: #3a86ff !important;
+  color: white;
+}
+
 .custom-workout-preview h3 {
   margin-top: 0;
   color: #fff;
@@ -1504,6 +1555,9 @@ font-family: 'Inter', system-ui, sans-serif;
 color: #fff;
 min-height: 100vh;
 background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+display: flex;
+flex-direction: column;
+mini-height: 100vh;
 }
 
 /* Workout Plan Selection */
@@ -1576,8 +1630,9 @@ color: #8d99ae;
 
 /* Workout Mode Styles */
 .workout-mode {
-position: relative;
-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
 }
 
 .camera-container {
